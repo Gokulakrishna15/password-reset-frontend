@@ -1,187 +1,66 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import axios from "axios";
-
-export default function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [message, setMessage] = useState("");
-=======
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const [form, setForm] = useState({ username: '', email: '', password: '' });
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
->>>>>>> origin/main
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
     try {
-      const res = await axios.post("http://localhost:5000/api/register", form);
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/register`,
+        { email, password }
+      );
       setMessage(res.data.message);
-    } catch (err) {
-      setMessage(err.response?.data?.message || "Something went wrong");
-=======
-    setMessage('');
-    setError('');
-    setLoading(true);
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      
-      if (res.ok) {
-        setMessage(data.message || 'Registration successful!');
-        setTimeout(() => navigate('/login'), 2000);
-      } else {
-        setError(data.message || 'Registration failed');
-      }
-    } catch {
-      setError('Unable to connect to server');
-    } finally {
-      setLoading(false);
->>>>>>> origin/main
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      setMessage("Registration failed");
     }
   };
 
   return (
-<<<<<<< HEAD
-    <div className="form-container">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
-      {message && <p>{message}</p>}
-=======
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 px-4">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-xl">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-green-600 mb-2">Create Account</h2>
-          <p className="text-gray-600">Sign up to get started</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-              Username
-            </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="Enter username"
-              value={form.username}
-              onChange={handleChange}
-              required
-              minLength={3}
-              disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition"
-            />
-            <p className="text-xs text-gray-500 mt-1">At least 3 characters</p>
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="your.email@example.com"
-              value={form.email}
-              onChange={handleChange}
-              required
-              disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Create a password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              minLength={8}
-              disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition"
-            />
-            <p className="text-xs text-gray-500 mt-1">At least 8 characters</p>
-          </div>
-
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-96">
+        <h2 className="text-2xl font-bold mb-4">Register</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 border rounded mb-4"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 border rounded mb-4"
+            required
+          />
           <button
             type="submit"
-            disabled={loading}
-            className="w-full bg-green-600 text-white py-2.5 rounded-lg font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
           >
-            {loading ? 'Creating Account...' : 'Register'}
+            Register
           </button>
         </form>
-
-        {message && (
-          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-green-800 text-sm text-center font-medium">{message}</p>
-            <p className="text-green-600 text-xs text-center mt-1">Redirecting to login...</p>
-          </div>
-        )}
-
-        {error && (
-          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800 text-sm text-center">{error}</p>
-          </div>
-        )}
-
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{' '}
-          <Link to="/login" className="text-green-600 hover:text-green-700 font-medium">
-            Login here
-          </Link>
-        </p>
+        {message && <p className="mt-4 text-red-500">{message}</p>}
+        <button
+          onClick={() => navigate("/login")}
+          className="mt-4 text-blue-500 underline"
+        >
+          Already have an account? Login
+        </button>
       </div>
->>>>>>> origin/main
     </div>
   );
 }
+
+export default Register;
