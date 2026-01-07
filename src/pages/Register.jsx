@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -13,13 +14,14 @@ function Register() {
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/register`,
-        { email, password }
+        { username, email, password }
       );
       setMessage(res.data.message);
+      // ✅ After successful registration, redirect to login
       navigate("/login");
     } catch (error) {
       console.error(error);
-      setMessage("Registration failed");
+      setMessage(error.response?.data?.message || "Registration failed");
     }
   };
 
@@ -28,6 +30,14 @@ function Register() {
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-bold mb-4">Register</h2>
         <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full p-2 border rounded mb-4"
+            required
+          />
           <input
             type="email"
             placeholder="Email Address"
@@ -38,7 +48,7 @@ function Register() {
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Password (min 8 characters)"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 border rounded mb-4"
@@ -52,12 +62,17 @@ function Register() {
           </button>
         </form>
         {message && <p className="mt-4 text-red-500">{message}</p>}
-        <button
-          onClick={() => navigate("/login")}
-          className="mt-4 text-blue-500 underline"
-        >
-          Already have an account? Login
-        </button>
+
+        {/* Link back to Login */}
+        <p className="mt-4 text-gray-600">
+          Already have an account?{" "}
+          <button
+            onClick={() => navigate("/login")}
+            className="text-blue-500 underline"
+          >
+            Login
+          </button>
+        </p>
       </div>
     </div>
   );

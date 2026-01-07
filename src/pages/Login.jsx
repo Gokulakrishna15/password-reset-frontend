@@ -52,12 +52,25 @@ function Login() {
           </button>
         </form>
         {message && <p className="mt-4 text-red-500">{message}</p>}
+
+        {/* Forgot Password */}
         <button
           onClick={() => navigate("/forgot-password")}
           className="mt-4 text-blue-500 underline"
         >
           Forgot Password?
         </button>
+
+        {/* Register Link */}
+        <p className="mt-4 text-gray-600">
+          Don't have an account?{" "}
+          <button
+            onClick={() => navigate("/register")}
+            className="text-blue-500 underline"
+          >
+            Register
+          </button>
+        </p>
       </div>
     </div>
   );
