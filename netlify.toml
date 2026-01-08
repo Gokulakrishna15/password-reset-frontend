@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  VITE_API_URL = "https://your-backend-url.com" # replace with your actual backend API
+  VITE_API_URL = "https://password-reset-backend-prod.onrender.com"
 
 # ✅ Redirects for React Router (SPA)
 [[redirects]]
