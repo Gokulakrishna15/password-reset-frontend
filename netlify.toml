@@ -3,4 +3,11 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
+  VITE_API_URL = "https://your-backend-url.com" # replace with your actual backend API
+
+# ✅ Redirects for React Router (SPA)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
