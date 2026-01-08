@@ -16,6 +16,10 @@ function Login() {
         { email, password }
       );
       setMessage(res.data.message);
+
+      // ✅ Save email for Dashboard
+      localStorage.setItem("userEmail", email);
+
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
